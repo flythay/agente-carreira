@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Perfil profissional estruturado",
+  "description": "Contrato de dados compartilhado por todos os skills do agente de carreira. Campos sem informacao confirmada pelo usuario devem ficar vazios — nunca deduzidos.",
+  "type": "object",
+  "required": ["meta", "dados_pessoais", "experiencias"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "idioma_entrada": { "type": "string", "enum": ["pt", "en", "es", "outro"] },
+        "idioma_saida": { "type": "string", "enum": ["pt", "en"] },
+        "mercado_alvo": { "type": "string", "enum": ["br", "eu", "uk", "us", "remoto_intl"] },
+        "cargo_alvo": { "type": "string" },
+        "versao": { "type": "string" },
+        "atualizado_em": { "type": "string", "format": "date" },
+        "lacunas_conhecidas": {
+          "type": "array",
+          "description": "Itens que o usuario nao soube responder. Consumido pelos skills de adaptacao e preparacao.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "dados_pessoais": {
+      "type": "object",
+      "required": ["nome"],
+      "properties": {
+        "nome": { "type": "string" },
+        "titulo_profissional": { "type": "string" },
+        "cidade": { "type": "string" },
+        "pais": { "type": "string" },
+        "email": { "type": "string" },
+        "telefone": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "github": { "type": "string" },
+        "site": { "type": "string" },
+        "autorizacao_trabalho": {
+          "type": "string",
+          "description": "Ex.: 'Cidada brasileira; elegivel a EU Blue Card mediante oferta'. Vazio se nao confirmado."
+        },
+        "disponibilidade": { "type": "string" }
+      }
+    },
+    "resumo": { "type": "string", "description": "2 a 3 linhas, sem primeira pessoa." },
+    "experiencias": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["cargo", "empresa"],
+        "properties": {
+          "cargo": { "type": "string" },
+          "empresa": { "type": "string" },
+          "setor": { "type": "string" },
+          "cidade": { "type": "string" },
+          "pais": { "type": "string" },
+          "modalidade": { "type": "string", "enum": ["presencial", "hibrido", "remoto", ""] },
+          "inicio": { "type": "string", "description": "AAAA-MM" },
+          "fim": { "type": "string", "description": "AAAA-MM ou 'atual'" },
+          "contexto": { "type": "string", "description": "1 frase de contexto; nao entra no CV, alimenta a preparacao de entrevista." },
+          "bullets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["texto"],
+              "properties": {
+                "texto": { "type": "string" },
+                "metrica": { "type": "string", "description": "Numero/medida citada. Vazio = bullet sem quantificacao." },
+                "tecnologias": { "type": "array", "items": { "type": "string" } },
+                "confirmado_pelo_usuario": { "type": "boolean", "default": true }
+              }
+            }
+          }
+        }
+      }
+    },
+    "formacao": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "grau": { "type": "string", "description": "Ex.: Mestrado, Bacharelado, MBA" },
+          "curso": { "type": "string" },
+          "instituicao": { "type": "string" },
+          "cidade": { "type": "string" },
+          "pais": { "type": "string" },
+          "ano_conclusao": { "type": "string" },
+          "detalhe": { "type": "string", "description": "Titulo da dissertacao/TCC, se relevante." }
+        }
+      }
+    },
+    "competencias": {
+      "type": "object",
+      "description": "Chave = categoria (ex.: 'Linguagens'), valor = lista de termos literais.",
+      "additionalProperties": { "type": "array", "items": { "type": "string" } }
+    },
+    "idiomas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "idioma": { "type": "string" },
+          "nivel": { "type": "string", "description": "CEFR quando possivel: A1..C2, ou 'nativo'." },
+          "certificacao": { "type": "string" }
+        }
+      }
+    },
+    "certificacoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "emissor": { "type": "string" },
+          "ano": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "projetos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "descricao": { "type": "string" },
+          "tecnologias": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "publicacoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "titulo": { "type": "string" },
+          "veiculo": { "type": "string" },
+          "ano": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py --version)",
+      "Bash(py -0)",
+      "Bash(mkdir -p ~/.claude/skills)",
+      "Bash(cp -r \"/c/Users/Thayse/Downloads/agente-carreira/skills/\"* ~/.claude/skills/)"
+    ]
+  }
+}
